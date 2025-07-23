@@ -318,6 +318,16 @@ describe('HTTP Client', () => {
       )
     })
 
+    it('can customize timeout in milliseconds', () => {
+      const factory = new Factory()
+      factory.new().timeout(5000).get('http://example.com')
+      expect(wx.request).toHaveBeenCalledWith(
+        expect.objectContaining({
+          timeout: 5000
+        })
+      )
+    })
+
     describe('middleware', () => {
       it('should be applied', () => {
         const middleware = jest.fn((request, next) => next(request))

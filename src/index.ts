@@ -89,6 +89,8 @@ class PendingRequest {
 
   #data: RequestData = {}
 
+  #timeout: number | null = null
+
   #middlewares: Middleware<ResponseData>[] = []
 
   method(method: HttpMethod) {
@@ -159,6 +161,12 @@ class PendingRequest {
     return this.#data
   }
 
+  timeout(milliseconds: number) {
+    const request = this.#clone()
+    request.#timeout = milliseconds
+    return request
+  }
+
   use(fn: Middleware<any> | Middleware<any>[]) {
     const request = this.#clone()
     const handlers = Array.isArray(fn) ? fn : [fn]
@@ -226,6 +234,7 @@ class PendingRequest {
         filePath,
         name,
         header: request.#header,
+        timeout: request.#timeout ?? undefined,
         enableHttp2: true,
         success(res) {
           resolveHandler(new Response(res))
@@ -264,6 +273,7 @@ class PendingRequest {
       url: request.#buildUrl(),
       data: request.body(),
       header: request.#header,
+      timeout: request.#timeout ?? undefined,
       method: request.#httpMethod,
       dataType: request.isJson() ? 'json' : '其他',
       responseType: 'text',
@@ -296,6 +306,7 @@ class PendingRequest {
     request.#query = { ...this.#query }
     request.#header = { ...this.#header }
     request.#data = { ...this.#data }
+    request.#timeout = this.#timeout
     request.#middlewares = [...this.#middlewares]
     return request
   }
