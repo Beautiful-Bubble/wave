@@ -1,0 +1,35 @@
+{
+  "name": "@beautiful-bubble/wave",
+  "version": "0.1.0",
+  "description": "The HTTP client.",
+  "keywords": [
+    "wechat-miniprogram",
+    "http-client"
+  ],
+  "homepage": "https://github.com/Beautiful-Bubble/http-client#readme",
+  "bugs": {
+    "url": "https://github.com/Beautiful-Bubble/http-client/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beautiful-Bubble/http-client.git"
+  },
+  "license": "MIT",
+  "author": "Zhineng Li",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "format": "prettier --write --cache ."
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
+    "miniprogram-api-typings": "^4.1.0",
+    "prettier": "3.6.2",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
+  }
+}
