@@ -18,10 +18,12 @@
   "author": "Zhineng Li",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
+    "test:types": "tsd --files tests/**/*.test-d.ts",
     "format": "prettier --write --cache ."
   },
   "devDependencies": {
@@ -31,6 +33,7 @@
     "prettier": "3.6.2",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
+    "tsd": "^0.32.0",
     "typescript": "^5.8.3"
   }
 }

@@ -3,7 +3,9 @@ type QueryString = Record<string, string>
 type HttpMethod = WechatMiniprogram.RequestOption['method']
 type RequestTask = WechatMiniprogram.RequestTask | WechatMiniprogram.UploadTask
 type RequestData = Record<string, unknown>
-type ResponseData = WechatMiniprogram.RequestSuccessCallbackResult['data']
+type ResponseData =
+  | WechatMiniprogram.RequestSuccessCallbackResult['data']
+  | WechatMiniprogram.UploadFileSuccessCallbackResult['data']
 type MiddlewareNext<T extends ResponseData> = (
   request: PendingRequest
 ) => RequestPromise<Response<SuccessCallbackResult<T>, T>>
@@ -87,7 +89,7 @@ class PendingRequest {
 
   #data: RequestData = {}
 
-  #middlewares: Middleware<any>[] = []
+  #middlewares: Middleware<ResponseData>[] = []
 
   method(method: HttpMethod) {
     const request = this.#clone()
@@ -192,7 +194,12 @@ class PendingRequest {
 
     return this.#throughMiddlewares(request)(
       this.#dispatchUpload(option.name, option.filePath)
-    )
+    ) as RequestPromise<
+      Response<
+        WechatMiniprogram.UploadFileSuccessCallbackResult,
+        WechatMiniprogram.UploadFileSuccessCallbackResult['data']
+      >
+    >
   }
 
   #dispatchUpload(name: string, filePath: string) {
@@ -232,10 +239,12 @@ class PendingRequest {
     }
   }
 
-  #send<T extends ResponseData>(): RequestPromise<
-    Response<SuccessCallbackResult<T>, T>
-  > {
-    return this.#throughMiddlewares<T>(this)(this.#dispatchRequest<T>)
+  #send<T extends ResponseData>() {
+    return this.#throughMiddlewares<T>(this)(
+      this.#dispatchRequest<T>
+    ) as RequestPromise<
+      Response<WechatMiniprogram.RequestSuccessCallbackResult<T>, T>
+    >
   }
 
   #dispatchRequest<T extends ResponseData>(request: PendingRequest) {
@@ -274,7 +283,7 @@ class PendingRequest {
     return (handler: MiddlewareNext<T>) =>
       this.#middlewares.reduceRight(
         (next: MiddlewareNext<T>, middleware) => (request: PendingRequest) =>
-          middleware(request, next),
+          (middleware as Middleware<T>)(request, next),
         handler
       )(request)
   }

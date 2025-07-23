@@ -1,8 +1,7 @@
 import type { Config } from 'jest'
 
 const config: Config = {
-  preset: 'ts-jest',
-  roots: ['<rootDir>/src']
+  preset: 'ts-jest'
 }
 
 export default config

@@ -1,4 +1,4 @@
-import { Factory, Response } from './'
+import { Factory, Response } from '../src'
 
 describe('HTTP Client', () => {
   beforeEach(() => {
