@@ -24,7 +24,11 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:types": "tsd --files tests/**/*.test-d.ts",
-    "format": "prettier --write --cache ."
+    "test:all": "npm run test && npm run test:types",
+    "format": "prettier --write --cache .",
+    "format:check": "prettier --check .",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm run test:all"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
