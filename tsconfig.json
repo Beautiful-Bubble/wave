@@ -14,5 +14,6 @@
       "./node_modules/@types",
       "./node_modules/miniprogram-api-typings"
     ]
-  }
+  },
+  "include": ["src/**/*.ts"],
 }
