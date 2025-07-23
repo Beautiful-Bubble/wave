@@ -1,5 +1,7 @@
 # The HTTP Client for WeChat Mini Program
 
+[![CI](https://github.com/Beautiful-Bubble/wave/actions/workflows/ci.yml/badge.svg)](https://github.com/Beautiful-Bubble/wave/actions/workflows/ci.yml)
+
 Wave is an HTTP client designed for WeChat Mini Programs. It aims to enhance
 the developer experience when sending HTTP requests.
 
