@@ -92,7 +92,7 @@ configuring authentication tokens or recording outgoing requests.
 
 ```ts
 Client.use((request, next) => {
-    return next(request.withHeader('Authorization', 'Bearer ...'))
+  return next(request.withHeader('Authorization', 'Bearer ...'))
 })
 ```
 
