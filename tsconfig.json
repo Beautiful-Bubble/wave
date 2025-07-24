@@ -15,6 +15,5 @@
       "./node_modules/miniprogram-api-typings"
     ]
   },
-  "include": ["src"],
-  "exclude": ["*.test.ts", "*.test-d.ts"]
+  "include": ["src", "tests"]
 }
