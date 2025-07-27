@@ -360,7 +360,8 @@ describe('HTTP Client', () => {
       })
 
       it('can modify upload request', () => {
-        const middleware = (request: any, next: any) => next(request.withHeader('X-Foo', 'bar'))
+        const middleware = (request: any, next: any) =>
+          next(request.withHeader('X-Foo', 'bar'))
         const factory = new Factory()
         factory.new().use(middleware).upload({
           url: 'http://example.com',
