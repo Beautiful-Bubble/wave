@@ -336,12 +336,39 @@ describe('HTTP Client', () => {
         expect(middleware).toHaveBeenCalled()
       })
 
+      it('should be applied to the upload request', () => {
+        const middleware = jest.fn((request, next) => next(request))
+        const factory = new Factory()
+        factory.new().use(middleware).upload({
+          url: 'http://example.com',
+          filePath: 'foo.jpg',
+          name: 'file'
+        })
+        expect(middleware).toHaveBeenCalled()
+      })
+
       it('can modify HTTP request', () => {
         const middleware = (request: any, next: any) =>
           next(request.withHeader('X-Foo', 'bar'))
         const factory = new Factory()
         factory.new().use(middleware).get('http://example.com')
         expect(wx.request).toHaveBeenCalledWith(
+          expect.objectContaining({
+            header: expect.objectContaining({ 'X-Foo': 'bar' })
+          })
+        )
+      })
+
+      it('can modify upload request', () => {
+        const middleware = (request: any, next: any) =>
+          next(request.withHeader('X-Foo', 'bar'))
+        const factory = new Factory()
+        factory.new().use(middleware).upload({
+          url: 'http://example.com',
+          filePath: 'foo.jpg',
+          name: 'file'
+        })
+        expect(wx.uploadFile).toHaveBeenCalledWith(
           expect.objectContaining({
             header: expect.objectContaining({ 'X-Foo': 'bar' })
           })
